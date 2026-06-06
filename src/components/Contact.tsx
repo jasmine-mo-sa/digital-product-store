@@ -70,7 +70,7 @@ export function Contact() {
                 <p className="font-semibold text-gray-900 dark:text-white mb-1">Social DMs</p>
                 <p className="text-sm text-gray-500 dark:text-gray-400">Find me on Instagram or Twitter for quick chats and design inspo.</p>
                 <div className="flex gap-3 mt-3">
-                  <a href="#" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:opacity-90 transition">
+                  <a href="https://www.instagram.com/lumina.studio.ca/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:opacity-90 transition">
                     <Instagram className="w-3.5 h-3.5" /> Instagram
                   </a>
                   <a href="#" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:opacity-90 transition">

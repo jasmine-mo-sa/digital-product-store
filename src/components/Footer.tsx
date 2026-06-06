@@ -27,7 +27,9 @@ export function Footer() {
                 <Twitter className="w-4 h-4" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/lumina.studio.ca/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-brand-500/10 hover:text-brand-500 transition-colors"
               >
                 <Instagram className="w-4 h-4" />
