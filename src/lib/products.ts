@@ -27,7 +27,6 @@ export const products: Product[] = [
     gradient: "from-violet-600 to-purple-800",
     icon: "📄",
     sales: 1240,
-    previewUrl: "https://drive.google.com/file/d/1RW3abeRObU_BxFbVhHuUgoCPv9fnu_fX/view?usp=sharing",
   },
   {
     id: 2,
