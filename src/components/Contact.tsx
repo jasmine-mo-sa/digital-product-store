@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, ValidationError } from "@formspree/react";
-import { Mail, MessageCircle, Send, CheckCircle2, Instagram, Twitter } from "lucide-react";
+import { Mail, MessageCircle, Send, CheckCircle2, Instagram } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/languageStore";
 
@@ -62,9 +62,6 @@ export function Contact() {
                 <div className="flex gap-3 mt-3">
                   <a href="https://www.instagram.com/lumina.studio.ca/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:opacity-90 transition">
                     <Instagram className="w-3.5 h-3.5" /> Instagram
-                  </a>
-                  <a href="#" className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white hover:opacity-90 transition">
-                    <Twitter className="w-3.5 h-3.5" /> Twitter
                   </a>
                 </div>
               </div>

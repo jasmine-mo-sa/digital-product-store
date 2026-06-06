@@ -129,7 +129,7 @@ export const translations = {
       emailTitle: "Email me directly",
       emailNote: "I reply within 24 hours",
       socialTitle: "Social DMs",
-      socialDesc: "Find me on Instagram or Twitter for quick chats and design inspo.",
+      socialDesc: "Find me on Instagram for quick chats and design inspo.",
       customNote:
         "Custom orders welcome! Need a template tailored to your brand? Send me a message and let's create something unique together.",
       labelName: "Your Name",
@@ -284,7 +284,7 @@ export const translations = {
       emailTitle: "Direkt per E-Mail",
       emailNote: "Ich antworte innerhalb von 24 Stunden",
       socialTitle: "Social-Media-DMs",
-      socialDesc: "Finden Sie mich auf Instagram oder Twitter für schnelle Chats und Design-Inspiration.",
+      socialDesc: "Finden Sie mich auf Instagram für schnelle Chats und Design-Inspiration.",
       customNote:
         "Individuelle Bestellungen willkommen! Benötigen Sie eine Vorlage, die auf Ihre Marke zugeschnitten ist? Schreiben Sie mir und wir kreieren gemeinsam etwas Einzigartiges.",
       labelName: "Ihr Name",
@@ -436,7 +436,7 @@ export const translations = {
       emailTitle: "راسلني مباشرة",
       emailNote: "أرد خلال 24 ساعة",
       socialTitle: "رسائل السوشيال ميديا",
-      socialDesc: "تجدني على Instagram وTwitter للمحادثات السريعة والإلهام التصميمي.",
+      socialDesc: "تجدني على Instagram للمحادثات السريعة والإلهام التصميمي.",
       customNote:
         "الطلبات المخصصة مرحب بها! هل تحتاج قالباً مصمماً خصيصاً لعلامتك التجارية؟ أرسل لي رسالة ولنصنع شيئاً مميزاً معاً.",
       labelName: "اسمك",
