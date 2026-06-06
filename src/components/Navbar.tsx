@@ -1,11 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon, ShoppingBag, Menu, X, Sparkles } from "lucide-react";
+import { Sun, Moon, ShoppingBag, Menu, X, Sparkles, Globe, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/cartStore";
 import { CartDrawer } from "@/components/CartDrawer";
+import { useLanguage } from "@/lib/languageStore";
+import { useCurrency, type Currency } from "@/lib/currencyStore";
+import { type Lang, langMeta } from "@/lib/i18n";
+
+const LANGS: Lang[] = ["en", "de", "ar"];
+const CURRENCIES: Currency[] = ["USD", "CAD", "EUR"];
 
 export function Navbar() {
   const { theme, setTheme } = useTheme();
@@ -13,7 +19,13 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [currOpen, setCurrOpen] = useState(false);
   const { items } = useCart();
+  const { lang, setLang, t } = useLanguage();
+  const { currency, setCurrency } = useCurrency();
+  const langRef = useRef<HTMLDivElement>(null);
+  const currRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -22,11 +34,21 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close dropdowns on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
+      if (currRef.current && !currRef.current.contains(e.target as Node)) setCurrOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
   const navLinks = [
-    { label: "Products", href: "#products" },
-    { label: "About", href: "#about" },
-    { label: "Reviews", href: "#reviews" },
-    { label: "Contact", href: "#contact" },
+    { label: t.nav.products, href: "#products" },
+    { label: t.nav.about, href: "#about" },
+    { label: t.nav.reviews, href: "#reviews" },
+    { label: t.nav.contact, href: "#contact" },
   ];
 
   return (
@@ -65,7 +87,69 @@ export function Navbar() {
           </ul>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+
+            {/* Language dropdown */}
+            <div ref={langRef} className="relative hidden sm:block">
+              <button
+                onClick={() => { setLangOpen(!langOpen); setCurrOpen(false); }}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                aria-label="Select language"
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {langMeta[lang].label}
+                <ChevronDown className={cn("w-3 h-3 transition-transform", langOpen && "rotate-180")} />
+              </button>
+              {langOpen && (
+                <div className="absolute top-full mt-1.5 right-0 w-28 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                  {LANGS.map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => { setLang(l); setLangOpen(false); }}
+                      className={cn(
+                        "w-full text-left px-4 py-2.5 text-sm font-medium transition-colors",
+                        lang === l
+                          ? "bg-brand-500/10 text-brand-600 dark:text-brand-400"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5"
+                      )}
+                    >
+                      {langMeta[l].label} — {l === "en" ? "English" : l === "de" ? "Deutsch" : "العربية"}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Currency dropdown */}
+            <div ref={currRef} className="relative hidden sm:block">
+              <button
+                onClick={() => { setCurrOpen(!currOpen); setLangOpen(false); }}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                aria-label="Select currency"
+              >
+                {currency}
+                <ChevronDown className={cn("w-3 h-3 transition-transform", currOpen && "rotate-180")} />
+              </button>
+              {currOpen && (
+                <div className="absolute top-full mt-1.5 right-0 w-24 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                  {CURRENCIES.map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => { setCurrency(c); setCurrOpen(false); }}
+                      className={cn(
+                        "w-full text-left px-4 py-2.5 text-sm font-medium transition-colors",
+                        currency === c
+                          ? "bg-brand-500/10 text-brand-600 dark:text-brand-400"
+                          : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5"
+                      )}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Theme toggle */}
             {mounted && (
               <button
@@ -83,7 +167,7 @@ export function Navbar() {
               className="relative flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all shadow-lg shadow-brand-500/25"
             >
               <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline">Cart</span>
+              <span className="hidden sm:inline">{t.nav.cart}</span>
               {items.length > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-accent-500 text-white text-[10px] font-black flex items-center justify-center shadow-md animate-bounce">
                   {items.length}
@@ -114,6 +198,41 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
+            {/* Mobile language + currency */}
+            <div className="flex gap-2 pt-2 border-t border-white/10">
+              <div className="flex gap-1">
+                {LANGS.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    className={cn(
+                      "px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors",
+                      lang === l
+                        ? "bg-brand-500 text-white"
+                        : "text-gray-500 dark:text-gray-400 hover:text-brand-500"
+                    )}
+                  >
+                    {langMeta[l].label}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-1">
+                {CURRENCIES.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCurrency(c)}
+                    className={cn(
+                      "px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors",
+                      currency === c
+                        ? "bg-brand-500 text-white"
+                        : "text-gray-500 dark:text-gray-400 hover:text-brand-500"
+                    )}
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </header>

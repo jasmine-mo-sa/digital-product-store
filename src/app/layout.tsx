@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
+import { Inter, Fira_Code, Noto_Sans_Arabic } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/lib/languageStore";
+import { CurrencyProvider } from "@/lib/currencyStore";
 import "./globals.css";
 
 const inter = Inter({
@@ -11,6 +13,12 @@ const inter = Inter({
 const firaCode = Fira_Code({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -32,8 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${firaCode.variable} font-sans`}>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className={`${inter.variable} ${firaCode.variable} ${notoArabic.variable} font-sans`}>
+        <LanguageProvider>
+          <CurrencyProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </CurrencyProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

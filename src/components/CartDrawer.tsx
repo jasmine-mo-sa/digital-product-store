@@ -2,6 +2,8 @@
 
 import { X, ShoppingBag, Trash2, CreditCard, PackageOpen } from "lucide-react";
 import { useCart } from "@/lib/cartStore";
+import { useLanguage } from "@/lib/languageStore";
+import { useCurrency } from "@/lib/currencyStore";
 
 type Props = {
   open: boolean;
@@ -10,6 +12,8 @@ type Props = {
 
 export function CartDrawer({ open, onClose }: Props) {
   const { items, removeItem, clearCart, total } = useCart();
+  const { t } = useLanguage();
+  const { format } = useCurrency();
 
   return (
     <>
@@ -32,7 +36,7 @@ export function CartDrawer({ open, onClose }: Props) {
           <div className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-brand-500" />
             <h2 className="font-bold text-lg text-gray-900 dark:text-white">
-              Your Cart
+              {t.cart.heading}
             </h2>
             {items.length > 0 && (
               <span className="ml-1 px-2 py-0.5 rounded-full bg-brand-500 text-white text-xs font-bold">
@@ -55,13 +59,13 @@ export function CartDrawer({ open, onClose }: Props) {
               <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center">
                 <PackageOpen className="w-9 h-9 text-gray-300 dark:text-gray-600" />
               </div>
-              <p className="font-semibold text-gray-700 dark:text-gray-300">Your cart is empty</p>
-              <p className="text-sm text-gray-400">Add some templates to get started!</p>
+              <p className="font-semibold text-gray-700 dark:text-gray-300">{t.cart.empty}</p>
+              <p className="text-sm text-gray-400">{t.cart.emptyHint}</p>
               <button
                 onClick={onClose}
                 className="mt-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white text-sm font-semibold hover:opacity-90 transition"
               >
-                Browse Templates
+                {t.cart.browse}
               </button>
             </div>
           ) : (
@@ -70,20 +74,17 @@ export function CartDrawer({ open, onClose }: Props) {
                 key={item.id}
                 className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5"
               >
-                {/* Thumbnail */}
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-2xl shrink-0`}>
                   {item.icon}
                 </div>
-                {/* Info */}
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm text-gray-900 dark:text-white truncate">
                     {item.title}
                   </p>
                   <p className="text-brand-600 dark:text-brand-400 font-bold mt-0.5">
-                    ${item.price}
+                    {format(item.price)}
                   </p>
                 </div>
-                {/* Remove */}
                 <button
                   onClick={() => removeItem(item.id)}
                   className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
@@ -98,22 +99,19 @@ export function CartDrawer({ open, onClose }: Props) {
         {/* Footer */}
         {items.length > 0 && (
           <div className="px-6 py-5 border-t border-gray-100 dark:border-white/10 space-y-4">
-            {/* Total */}
             <div className="flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-300 font-medium">Total</span>
-              <span className="text-2xl font-black text-gray-900 dark:text-white">${total}</span>
+              <span className="text-gray-600 dark:text-gray-300 font-medium">{t.cart.total}</span>
+              <span className="text-2xl font-black text-gray-900 dark:text-white">{format(total)}</span>
             </div>
-            {/* Checkout */}
             <button className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-purple-600 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25">
               <CreditCard className="w-5 h-5" />
-              Checkout — ${total}
+              {t.cart.checkout} — {format(total)}
             </button>
-            {/* Clear */}
             <button
               onClick={clearCart}
               className="w-full text-sm text-gray-400 hover:text-red-500 transition-colors py-1"
             >
-              Clear cart
+              {t.cart.clear}
             </button>
           </div>
         )}

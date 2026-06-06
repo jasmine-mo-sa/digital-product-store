@@ -22,6 +22,11 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  :lang(ar) body,
+  :root:lang(ar) {
+    font-family: var(--font-arabic), sans-serif;
+  }
+
   ::selection {
     @apply bg-brand-500/30;
   }

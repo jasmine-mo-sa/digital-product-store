@@ -1,8 +1,11 @@
 "use client";
 
 import { ArrowRight, Star, Download, Users } from "lucide-react";
+import { useLanguage } from "@/lib/languageStore";
 
 export function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background */}
@@ -31,24 +34,23 @@ export function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 flex flex-col lg:flex-row items-center gap-16">
         {/* Text content */}
-        <div className="flex-1 text-center lg:text-left">
+        <div className="flex-1 text-center lg:text-start">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 dark:text-brand-400 text-sm font-medium mb-8 animate-fade-in">
             <Star className="w-4 h-4 fill-brand-500 text-brand-500" />
-            Trusted by 5,000+ Creatives Worldwide
+            {t.hero.badge}
           </div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6 animate-slide-up">
-            Design Templates
+            {t.hero.title1}
             <br />
-            <span className="text-gradient">That Elevate</span>
+            <span className="text-gradient">{t.hero.title2}</span>
             <br />
-            Your Brand
+            {t.hero.title3}
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed animate-slide-up" style={{ animationDelay: "0.1s" }}>
-            Premium Canva kits, resume templates, and digital planners — crafted pixel-perfect
-            for designers, freelancers, and go-getters.
+            {t.hero.description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up" style={{ animationDelay: "0.2s" }}>
@@ -56,23 +58,23 @@ export function Hero() {
               href="#products"
               className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white font-semibold text-lg hover:opacity-90 hover:scale-105 transition-all shadow-xl shadow-brand-500/30 glow"
             >
-              Browse Templates
+              {t.hero.cta1}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <a
               href="#reviews"
               className="flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-gray-200 dark:border-white/10 bg-white/60 dark:bg-white/5 text-gray-700 dark:text-gray-200 font-semibold text-lg hover:bg-gray-50 dark:hover:bg-white/10 transition-all"
             >
-              See Reviews
+              {t.hero.cta2}
             </a>
           </div>
 
           {/* Stats */}
           <div className="flex flex-wrap gap-8 justify-center lg:justify-start mt-14 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             {[
-              { icon: <Users className="w-5 h-5" />, value: "5,200+", label: "Happy Customers" },
-              { icon: <Download className="w-5 h-5" />, value: "18,000+", label: "Downloads" },
-              { icon: <Star className="w-5 h-5 fill-amber-400 text-amber-400" />, value: "4.9/5", label: "Average Rating" },
+              { icon: <Users className="w-5 h-5" />, value: t.hero.stat1Value, label: t.hero.stat1Label },
+              { icon: <Download className="w-5 h-5" />, value: t.hero.stat2Value, label: t.hero.stat2Label },
+              { icon: <Star className="w-5 h-5 fill-amber-400 text-amber-400" />, value: t.hero.stat3Value, label: t.hero.stat3Label },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-3">
                 <div className="p-2 rounded-xl bg-brand-500/10 text-brand-500 dark:text-brand-400">

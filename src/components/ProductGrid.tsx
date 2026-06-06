@@ -2,14 +2,26 @@
 
 import { useState, useCallback } from "react";
 import { ShoppingCart, Star, TrendingUp, CheckCircle2, ExternalLink } from "lucide-react";
-import { products, categories, type Category } from "@/lib/products";
+import { products, type Category } from "@/lib/products";
 import { useCart } from "@/lib/cartStore";
 import { ToastContainer, type ToastData } from "@/components/Toast";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/languageStore";
+import { useCurrency } from "@/lib/currencyStore";
+
+const ALL_CATEGORIES: Category[] = ["All", "Resume", "Canva Kit", "Planner"];
 
 export function ProductGrid() {
   const [activeCategory, setActiveCategory] = useState<Category>("All");
   const [toasts, setToasts] = useState<ToastData[]>([]);
+  const { t } = useLanguage();
+
+  const categoryLabel = (cat: Category) => {
+    if (cat === "All") return t.products.filterAll;
+    if (cat === "Resume") return t.products.catResume;
+    if (cat === "Canva Kit") return t.products.catCanva;
+    return t.products.catPlanner;
+  };
 
   const removeToast = useCallback((id: number) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -34,20 +46,19 @@ export function ProductGrid() {
           {/* Section header */}
           <div className="text-center mb-14">
             <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-brand-400 mb-3">
-              The Collection
+              {t.products.sectionLabel}
             </span>
             <h2 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4">
-              Premium Digital Products
+              {t.products.heading}
             </h2>
             <p className="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto">
-              Every template is crafted with obsessive attention to detail — ready to download
-              and use instantly.
+              {t.products.description}
             </p>
           </div>
 
           {/* Category filter pills */}
           <div className="flex flex-wrap gap-2 justify-center mb-12">
-            {categories.map((cat) => (
+            {ALL_CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -58,7 +69,7 @@ export function ProductGrid() {
                     : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:border-brand-400/40 hover:text-brand-600 dark:hover:text-brand-400"
                 )}
               >
-                {cat}
+                {categoryLabel(cat)}
               </button>
             ))}
           </div>
@@ -72,7 +83,6 @@ export function ProductGrid() {
         </div>
       </section>
 
-      {/* Toast notifications */}
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </>
   );
@@ -86,6 +96,8 @@ function ProductCard({
   onAddToast: (data: Omit<ToastData, "id">) => void;
 }) {
   const { addItem, items } = useCart();
+  const { t } = useLanguage();
+  const { format } = useCurrency();
   const alreadyInCart = items.some((i) => i.id === product.id);
   const [justAdded, setJustAdded] = useState(false);
 
@@ -107,6 +119,20 @@ function ProductCard({
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : null;
 
+  // Pull translated badge label
+  const badgeLabel = product.badge
+    ? product.badge === "Best Seller" ? t.products.badgeBestSeller
+    : product.badge === "New" ? t.products.badgeNew
+    : product.badge === "Popular" ? t.products.badgePopular
+    : t.products.badgeSale
+    : undefined;
+
+  // Pull translated product data
+  const pd = t.productData[product.id as keyof typeof t.productData];
+  const title = pd?.title ?? product.title;
+  const description = pd?.description ?? product.description;
+  const features = pd?.features ?? product.features;
+
   return (
     <article className="group relative flex flex-col rounded-3xl overflow-hidden bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 card-hover glow-hover shadow-sm">
       {/* Product visual */}
@@ -118,9 +144,9 @@ function ProductCard({
 
         {/* Badges */}
         <div className="absolute top-4 left-4 flex gap-2">
-          {product.badge && (
+          {badgeLabel && (
             <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-white text-gray-900 text-xs font-bold shadow-sm">
-              {product.badge}
+              {badgeLabel}
             </span>
           )}
           {discount && (
@@ -131,7 +157,9 @@ function ProductCard({
         </div>
 
         <span className="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm text-white text-xs font-medium">
-          {product.category}
+          {product.category === "Resume" ? t.products.catResume
+            : product.category === "Canva Kit" ? t.products.catCanva
+            : t.products.catPlanner}
         </span>
       </div>
 
@@ -139,7 +167,7 @@ function ProductCard({
       <div className="flex flex-col flex-1 p-6">
         <div className="flex items-center gap-1.5 text-xs text-gray-400 dark:text-gray-500 mb-3">
           <TrendingUp className="w-3.5 h-3.5 text-brand-500" />
-          <span>{product.sales.toLocaleString()} sold</span>
+          <span>{product.sales.toLocaleString()} {t.products.sold}</span>
           <span className="mx-1">·</span>
           <div className="flex items-center gap-0.5">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
@@ -148,15 +176,15 @@ function ProductCard({
         </div>
 
         <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-2 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">
-          {product.title}
+          {title}
         </h3>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-5 leading-relaxed flex-1">
-          {product.description}
+          {description}
         </p>
 
         {/* Features */}
         <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 mb-6">
-          {product.features.map((f) => (
+          {features.map((f) => (
             <li key={f} className="flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-300">
               <CheckCircle2 className="w-3.5 h-3.5 text-brand-500 shrink-0" />
               {f}
@@ -168,11 +196,11 @@ function ProductCard({
         <div className="flex items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-white/5">
           <div>
             <span className="text-2xl font-black text-gray-900 dark:text-white">
-              ${product.price}
+              {format(product.price)}
             </span>
             {product.originalPrice && (
               <span className="ml-2 text-sm text-gray-400 line-through">
-                ${product.originalPrice}
+                {format(product.originalPrice)}
               </span>
             )}
           </div>
@@ -184,7 +212,7 @@ function ProductCard({
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
             >
-              <ExternalLink className="w-4 h-4" /> View / Download
+              <ExternalLink className="w-4 h-4" /> {t.products.viewDownload}
             </a>
           ) : (
             <button
@@ -200,17 +228,11 @@ function ProductCard({
               )}
             >
               {alreadyInCart ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4" /> In Cart
-                </>
+                <><CheckCircle2 className="w-4 h-4" /> {t.products.inCart}</>
               ) : justAdded ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4" /> Added!
-                </>
+                <><CheckCircle2 className="w-4 h-4" /> {t.products.added}</>
               ) : (
-                <>
-                  <ShoppingCart className="w-4 h-4" /> Add to Cart
-                </>
+                <><ShoppingCart className="w-4 h-4" /> {t.products.addToCart}</>
               )}
             </button>
           )}
