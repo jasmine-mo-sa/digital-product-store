@@ -1,47 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import { Mail, MessageCircle, Send, CheckCircle2, Instagram, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
-    if (!formId) {
-      setError("Contact form is not configured yet. Please try emailing directly.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const res = await fetch(`https://formspree.io/f/${formId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (res.ok) {
-        setSubmitted(true);
-      } else {
-        const data = await res.json();
-        setError(data?.errors?.[0]?.message ?? "Something went wrong. Please try again.");
-      }
-    } catch {
-      setError("Network error — please check your connection and try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [state, handleSubmit] = useForm("xjgdyvvn");
 
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -115,7 +79,7 @@ export function Contact() {
           {/* Form — right */}
           <div className="lg:col-span-3">
             <div className="p-8 rounded-3xl bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 shadow-sm">
-              {submitted ? (
+              {state.succeeded ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
                     <CheckCircle2 className="w-8 h-8 text-green-500" />
@@ -124,75 +88,69 @@ export function Contact() {
                   <p className="text-gray-500 dark:text-gray-400 max-w-xs">
                     Thanks for reaching out! I'll get back to you within 24 hours.
                   </p>
-                  <button
-                    onClick={() => { setSubmitted(false); setForm({ name: "", email: "", message: "" }); }}
-                    className="mt-2 text-sm text-brand-500 hover:underline font-medium"
-                  >
-                    Send another message
-                  </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                         Your Name
                       </label>
                       <input
+                        id="name"
                         type="text"
+                        name="name"
                         required
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
                         placeholder="Jane Smith"
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition text-sm"
                       />
+                      <ValidationError field="name" errors={state.errors} className="mt-1.5 text-xs text-red-500" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                         Email Address
                       </label>
                       <input
+                        id="email"
                         type="email"
+                        name="email"
                         required
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
                         placeholder="jane@example.com"
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition text-sm"
                       />
+                      <ValidationError field="email" errors={state.errors} className="mt-1.5 text-xs text-red-500" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                       Message
                     </label>
                     <textarea
+                      id="message"
+                      name="message"
                       required
                       rows={5}
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
                       placeholder="Hi Jasmine, I'd love to ask about..."
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition text-sm resize-none"
                     />
+                    <ValidationError field="message" errors={state.errors} className="mt-1.5 text-xs text-red-500" />
                   </div>
 
-                  {error && (
-                    <p className="text-sm text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-4 py-3">
-                      {error}
-                    </p>
-                  )}
+                  {/* Form-level errors (e.g. network, spam) */}
+                  <ValidationError errors={state.errors} className="text-sm text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-4 py-3" />
 
                   <button
                     type="submit"
-                    disabled={loading}
+                    disabled={state.submitting}
                     className={cn(
                       "w-full flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-white transition-all",
-                      loading
+                      state.submitting
                         ? "bg-brand-400 cursor-not-allowed"
                         : "bg-gradient-to-r from-brand-600 to-purple-600 hover:opacity-90 hover:scale-[1.02] shadow-lg shadow-brand-500/25"
                     )}
                   >
-                    {loading ? (
+                    {state.submitting ? (
                       <>
                         <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                         Sending...
