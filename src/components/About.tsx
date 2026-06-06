@@ -44,13 +44,14 @@ export function About() {
               <div className="relative w-72 h-72 sm:w-80 sm:h-80">
                 <div className="absolute inset-0 rounded-full border-2 border-dashed border-brand-400/30 animate-spin" style={{ animationDuration: "20s" }} />
                 <div className="absolute inset-4 rounded-full border border-brand-500/20" />
-                <div className="absolute inset-8 rounded-full overflow-hidden shadow-2xl shadow-brand-500/30 ring-4 ring-brand-500/20">
+                <div className="absolute inset-8 rounded-full overflow-hidden shadow-2xl shadow-brand-500/30 ring-4 ring-brand-500/20 relative">
                   <Image
                     src="/jasmine.jpg"
                     alt="Jasmine Mo"
                     fill
                     className="object-cover object-top"
-                    sizes="256px"
+                    sizes="224px"
+                    priority
                   />
                 </div>
                 <div className="absolute -top-2 -right-4 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
