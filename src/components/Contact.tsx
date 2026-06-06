@@ -9,14 +9,38 @@ export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate submission — wire up to your backend / Formspree / EmailJS later
-    setTimeout(() => {
+    setError(null);
+
+    const formId = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+    if (!formId) {
+      setError("Contact form is not configured yet. Please try emailing directly.");
       setLoading(false);
-      setSubmitted(true);
-    }, 1200);
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${formId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const data = await res.json();
+        setError(data?.errors?.[0]?.message ?? "Something went wrong. Please try again.");
+      }
+    } catch {
+      setError("Network error — please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -151,6 +175,12 @@ export function Contact() {
                       className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand-500/50 focus:border-brand-500 transition text-sm resize-none"
                     />
                   </div>
+
+                  {error && (
+                    <p className="text-sm text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-4 py-3">
+                      {error}
+                    </p>
+                  )}
 
                   <button
                     type="submit"
