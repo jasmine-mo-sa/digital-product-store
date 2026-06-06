@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { ShoppingCart, Star, TrendingUp, CheckCircle2 } from "lucide-react";
+import { ShoppingCart, Star, TrendingUp, CheckCircle2, ExternalLink } from "lucide-react";
 import { products, categories, type Category } from "@/lib/products";
 import { useCart } from "@/lib/cartStore";
 import { ToastContainer, type ToastData } from "@/components/Toast";
@@ -177,32 +177,43 @@ function ProductCard({
             )}
           </div>
 
-          <button
-            onClick={handleBuy}
-            disabled={alreadyInCart}
-            className={cn(
-              "flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300",
-              alreadyInCart
-                ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30 cursor-default"
-                : justAdded
-                ? "bg-green-500 text-white scale-95"
-                : "bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
-            )}
-          >
-            {alreadyInCart ? (
-              <>
-                <CheckCircle2 className="w-4 h-4" /> In Cart
-              </>
-            ) : justAdded ? (
-              <>
-                <CheckCircle2 className="w-4 h-4" /> Added!
-              </>
-            ) : (
-              <>
-                <ShoppingCart className="w-4 h-4" /> Add to Cart
-              </>
-            )}
-          </button>
+          {product.previewUrl ? (
+            <a
+              href={product.previewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
+            >
+              <ExternalLink className="w-4 h-4" /> View / Download
+            </a>
+          ) : (
+            <button
+              onClick={handleBuy}
+              disabled={alreadyInCart}
+              className={cn(
+                "flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300",
+                alreadyInCart
+                  ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30 cursor-default"
+                  : justAdded
+                  ? "bg-green-500 text-white scale-95"
+                  : "bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
+              )}
+            >
+              {alreadyInCart ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" /> In Cart
+                </>
+              ) : justAdded ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" /> Added!
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="w-4 h-4" /> Add to Cart
+                </>
+              )}
+            </button>
+          )}
         </div>
       </div>
     </article>
