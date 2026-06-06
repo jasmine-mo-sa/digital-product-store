@@ -38,13 +38,17 @@ export async function POST(req: NextRequest) {
           currency: currency.toLowerCase(),
           product_data: {
             name: item.title,
+            // product_id is used server-side on the success page to look up
+            // the protected download URL — it is never exposed to the browser
+            metadata: { product_id: item.id.toString() },
           },
           unit_amount: Math.round(item.price * rate * 100), // Stripe uses cents
         },
         quantity: 1,
       })),
       mode: "payment",
-      success_url: `${origin}/checkout/success`,
+      // {CHECKOUT_SESSION_ID} is a Stripe template literal — replaced automatically
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/#products`,
     });
 
