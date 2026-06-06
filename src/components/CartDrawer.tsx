@@ -1,6 +1,7 @@
 "use client";
 
-import { X, ShoppingBag, Trash2, CreditCard, PackageOpen } from "lucide-react";
+import { useState } from "react";
+import { X, ShoppingBag, Trash2, CreditCard, PackageOpen, Loader2 } from "lucide-react";
 import { useCart } from "@/lib/cartStore";
 import { useLanguage } from "@/lib/languageStore";
 import { useCurrency } from "@/lib/currencyStore";
@@ -13,7 +14,31 @@ type Props = {
 export function CartDrawer({ open, onClose }: Props) {
   const { items, removeItem, clearCart, total } = useCart();
   const { t } = useLanguage();
-  const { format } = useCurrency();
+  const { format, currency } = useCurrency();
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    setCheckingOut(true);
+    setCheckoutError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items, currency }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setCheckoutError(data.error ?? "Something went wrong. Please try again.");
+      }
+    } catch {
+      setCheckoutError("Network error — please check your connection.");
+    } finally {
+      setCheckingOut(false);
+    }
+  };
 
   return (
     <>
@@ -103,9 +128,29 @@ export function CartDrawer({ open, onClose }: Props) {
               <span className="text-gray-600 dark:text-gray-300 font-medium">{t.cart.total}</span>
               <span className="text-2xl font-black text-gray-900 dark:text-white">{format(total)}</span>
             </div>
-            <button className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-purple-600 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25">
-              <CreditCard className="w-5 h-5" />
-              {t.cart.checkout} — {format(total)}
+
+            {checkoutError && (
+              <p className="text-xs text-red-500 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-3 py-2">
+                {checkoutError}
+              </p>
+            )}
+
+            <button
+              onClick={handleCheckout}
+              disabled={checkingOut}
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-purple-600 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100"
+            >
+              {checkingOut ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Redirecting to payment…
+                </>
+              ) : (
+                <>
+                  <CreditCard className="w-5 h-5" />
+                  {t.cart.checkout} — {format(total)}
+                </>
+              )}
             </button>
             <button
               onClick={clearCart}
