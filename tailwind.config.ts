@@ -14,6 +14,7 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "monospace"],
       },
       colors: {
+        // Gold/warm brand palette — Studio Lumina
         brand: {
           50:  "#fdfaf5",
           100: "#f7f0e0",
@@ -30,6 +31,11 @@ const config: Config = {
           400: "#f0a050",
           500: "#e8873a",
         },
+        // Semantic dark-mode surface tokens
+        surface: "#12100e",   // page background
+        card:    "#1a1610",   // card / panel
+        deep:    "#15120a",   // deep drawer / sidebar
+        overlay: "#1e1a12",   // toast / dropdown / popover
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

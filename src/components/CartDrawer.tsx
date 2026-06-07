@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { X, ShoppingBag, Trash2, CreditCard, PackageOpen, Loader2 } from "lucide-react";
+import { X, ShoppingBag, Trash2, CreditCard, PackageOpen } from "lucide-react";
 import { useCart } from "@/lib/cartStore";
-import { useLanguage } from "@/lib/languageStore";
-import { useCurrency } from "@/lib/currencyStore";
 
 type Props = {
   open: boolean;
@@ -13,32 +10,6 @@ type Props = {
 
 export function CartDrawer({ open, onClose }: Props) {
   const { items, removeItem, clearCart, total } = useCart();
-  const { t } = useLanguage();
-  const { format, currency } = useCurrency();
-  const [checkingOut, setCheckingOut] = useState(false);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
-
-  const handleCheckout = async () => {
-    setCheckingOut(true);
-    setCheckoutError(null);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, currency }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        setCheckoutError(data.error ?? "Something went wrong. Please try again.");
-      }
-    } catch {
-      setCheckoutError("Network error — please check your connection.");
-    } finally {
-      setCheckingOut(false);
-    }
-  };
 
   return (
     <>
@@ -52,7 +23,7 @@ export function CartDrawer({ open, onClose }: Props) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-[#15120a] shadow-2xl z-50 flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-deep shadow-2xl z-50 flex flex-col transition-transform duration-300 ease-in-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -61,7 +32,7 @@ export function CartDrawer({ open, onClose }: Props) {
           <div className="flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-brand-500" />
             <h2 className="font-bold text-lg text-gray-900 dark:text-white">
-              {t.cart.heading}
+              Your Cart
             </h2>
             {items.length > 0 && (
               <span className="ml-1 px-2 py-0.5 rounded-full bg-brand-500 text-white text-xs font-bold">
@@ -84,13 +55,13 @@ export function CartDrawer({ open, onClose }: Props) {
               <div className="w-20 h-20 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center">
                 <PackageOpen className="w-9 h-9 text-gray-300 dark:text-gray-600" />
               </div>
-              <p className="font-semibold text-gray-700 dark:text-gray-300">{t.cart.empty}</p>
-              <p className="text-sm text-gray-400">{t.cart.emptyHint}</p>
+              <p className="font-semibold text-gray-700 dark:text-gray-300">Your cart is empty</p>
+              <p className="text-sm text-gray-400">Add some templates to get started!</p>
               <button
                 onClick={onClose}
                 className="mt-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white text-sm font-semibold hover:opacity-90 transition"
               >
-                {t.cart.browse}
+                Browse Templates
               </button>
             </div>
           ) : (
@@ -99,17 +70,20 @@ export function CartDrawer({ open, onClose }: Props) {
                 key={item.id}
                 className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5"
               >
+                {/* Thumbnail */}
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-2xl shrink-0`}>
                   {item.icon}
                 </div>
+                {/* Info */}
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm text-gray-900 dark:text-white truncate">
                     {item.title}
                   </p>
                   <p className="text-brand-600 dark:text-brand-400 font-bold mt-0.5">
-                    {format(item.price)}
+                    ${item.price}
                   </p>
                 </div>
+                {/* Remove */}
                 <button
                   onClick={() => removeItem(item.id)}
                   className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
@@ -124,39 +98,22 @@ export function CartDrawer({ open, onClose }: Props) {
         {/* Footer */}
         {items.length > 0 && (
           <div className="px-6 py-5 border-t border-gray-100 dark:border-white/10 space-y-4">
+            {/* Total */}
             <div className="flex items-center justify-between">
-              <span className="text-gray-600 dark:text-gray-300 font-medium">{t.cart.total}</span>
-              <span className="text-2xl font-black text-gray-900 dark:text-white">{format(total)}</span>
+              <span className="text-gray-600 dark:text-gray-300 font-medium">Total</span>
+              <span className="text-2xl font-black text-gray-900 dark:text-white">${total}</span>
             </div>
-
-            {checkoutError && (
-              <p className="text-xs text-red-500 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl px-3 py-2">
-                {checkoutError}
-              </p>
-            )}
-
-            <button
-              onClick={handleCheckout}
-              disabled={checkingOut}
-              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100"
-            >
-              {checkingOut ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Redirecting to payment…
-                </>
-              ) : (
-                <>
-                  <CreditCard className="w-5 h-5" />
-                  {t.cart.checkout} — {format(total)}
-                </>
-              )}
+            {/* Checkout */}
+            <button className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25">
+              <CreditCard className="w-5 h-5" />
+              Checkout — ${total}
             </button>
+            {/* Clear */}
             <button
               onClick={clearCart}
               className="w-full text-sm text-gray-400 hover:text-red-500 transition-colors py-1"
             >
-              {t.cart.clear}
+              Clear cart
             </button>
           </div>
         )}

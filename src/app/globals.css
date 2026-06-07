@@ -11,6 +11,10 @@
   .dark {
     --background: 30 20% 6%;
     --foreground: 0 0% 95%;
+    --color-surface:  #12100e;
+    --color-card:     #1a1610;
+    --color-overlay:  #1e1a12;
+    --color-deep:     #15120a;
   }
 
   html {
@@ -18,13 +22,13 @@
   }
 
   body {
-    @apply bg-white dark:bg-[#12100e] text-gray-900 dark:text-gray-100 antialiased;
+    @apply bg-white text-gray-900 antialiased;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  :lang(ar) body,
-  :root:lang(ar) {
-    font-family: var(--font-arabic), sans-serif;
+  .dark body {
+    background-color: var(--color-surface);
+    color: #f3f4f6;
   }
 
   ::selection {
@@ -47,6 +51,10 @@
 
   .card-hover {
     @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  }
+
+  .btn-brand {
+    @apply bg-gradient-to-r from-brand-600 to-brand-700 text-white hover:opacity-90 shadow-lg shadow-brand-500/25;
   }
 
   .glow {

@@ -10,8 +10,6 @@ export type Product = {
   gradient: string;
   icon: string;
   sales: number;
-  previewUrl?: string;
-  previewImage?: string;
 };
 
 export const products: Product[] = [

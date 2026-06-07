@@ -2,6 +2,11 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
+const BRAND_500 = "#c9a96e";
+const BRAND_600 = "#a07840";
+const BRAND_RGB = "201,169,110";
+const brand = (a: number) => `rgba(${BRAND_RGB},${a})`;
+
 export function GET() {
   return new ImageResponse(
     (
@@ -27,7 +32,7 @@ export function GET() {
             bottom: 0,
             left: 0,
             backgroundImage:
-              "linear-gradient(rgba(201,169,110,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(201,169,110,0.07) 1px, transparent 1px)",
+              `linear-gradient(${brand(0.07)} 1px, transparent 1px), linear-gradient(90deg, ${brand(0.07)} 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
             display: "flex",
           }}
@@ -42,7 +47,7 @@ export function GET() {
             width: 580,
             height: 580,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(201,169,110,0.45) 0%, transparent 68%)",
+            background: `radial-gradient(circle, ${brand(0.45)} 0%, transparent 68%)`,
             display: "flex",
           }}
         />
@@ -56,7 +61,7 @@ export function GET() {
             width: 500,
             height: 500,
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(232,201,138,0.28) 0%, transparent 68%)",
+            background: `radial-gradient(circle, ${brand(0.28)} 0%, transparent 68%)`,
             display: "flex",
           }}
         />
@@ -70,7 +75,7 @@ export function GET() {
             width: 700,
             height: 300,
             borderRadius: "50%",
-            background: "radial-gradient(ellipse, rgba(201,169,110,0.08) 0%, transparent 70%)",
+            background: `radial-gradient(ellipse, ${brand(0.08)} 0%, transparent 70%)`,
             transform: "translate(-50%, -50%)",
             display: "flex",
           }}
@@ -85,9 +90,9 @@ export function GET() {
             width: 72,
             height: 72,
             borderRadius: 20,
-            background: "linear-gradient(135deg, #a07840 0%, #c9a96e 100%)",
+            background: `linear-gradient(135deg, ${BRAND_600} 0%, ${BRAND_500} 100%)`,
             marginBottom: 28,
-            boxShadow: "0 0 40px rgba(201,169,110,0.5)",
+            boxShadow: `0 0 40px ${brand(0.5)}`,
           }}
         >
           <span
@@ -127,7 +132,7 @@ export function GET() {
             style={{
               fontSize: 88,
               fontWeight: 900,
-              color: "#e8c98a",
+              color: BRAND_500,
               letterSpacing: "-3px",
               lineHeight: 1,
             }}
@@ -171,7 +176,7 @@ export function GET() {
               borderRight: "1px solid rgba(255,255,255,0.1)",
             }}
           >
-            <span style={{ fontSize: 23, fontWeight: 700, color: "#e8c98a", lineHeight: 1 }}>
+            <span style={{ fontSize: 23, fontWeight: 700, color: BRAND_500, lineHeight: 1 }}>
               5,200+
             </span>
             <span style={{ fontSize: 13, color: "rgba(255,255,255,0.42)", marginTop: 5 }}>
@@ -187,7 +192,7 @@ export function GET() {
               borderRight: "1px solid rgba(255,255,255,0.1)",
             }}
           >
-            <span style={{ fontSize: 23, fontWeight: 700, color: "#e8c98a", lineHeight: 1 }}>
+            <span style={{ fontSize: 23, fontWeight: 700, color: BRAND_500, lineHeight: 1 }}>
               18,000+
             </span>
             <span style={{ fontSize: 13, color: "rgba(255,255,255,0.42)", marginTop: 5 }}>
@@ -202,7 +207,7 @@ export function GET() {
               padding: "18px 48px",
             }}
           >
-            <span style={{ fontSize: 23, fontWeight: 700, color: "#e8c98a", lineHeight: 1 }}>
+            <span style={{ fontSize: 23, fontWeight: 700, color: BRAND_500, lineHeight: 1 }}>
               4.9 / 5
             </span>
             <span style={{ fontSize: 13, color: "rgba(255,255,255,0.42)", marginTop: 5 }}>
@@ -212,6 +217,6 @@ export function GET() {
         </div>
       </div>
     ),
-    { width: 1200, height: 630 },
+    { width: 1200, height: 630, headers: { "Cache-Control": "public, max-age=31536000, immutable" } },
   );
 }
