@@ -52,7 +52,7 @@ export function CartDrawer({ open, onClose }: Props) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-[#0f0820] shadow-2xl z-50 flex flex-col transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-[#15120a] shadow-2xl z-50 flex flex-col transition-transform duration-300 ease-in-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -88,7 +88,7 @@ export function CartDrawer({ open, onClose }: Props) {
               <p className="text-sm text-gray-400">{t.cart.emptyHint}</p>
               <button
                 onClick={onClose}
-                className="mt-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white text-sm font-semibold hover:opacity-90 transition"
+                className="mt-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white text-sm font-semibold hover:opacity-90 transition"
               >
                 {t.cart.browse}
               </button>
@@ -138,7 +138,7 @@ export function CartDrawer({ open, onClose }: Props) {
             <button
               onClick={handleCheckout}
               disabled={checkingOut}
-              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-purple-600 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100"
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 text-white font-semibold hover:opacity-90 hover:scale-[1.02] transition-all shadow-lg shadow-brand-500/25 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100"
             >
               {checkingOut ? (
                 <>

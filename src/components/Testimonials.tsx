@@ -4,7 +4,7 @@ import { Star, Quote } from "lucide-react";
 import { useLanguage } from "@/lib/languageStore";
 
 const testimonialMeta = [
-  { name: "Priya Sharma", role: "UX Designer · Freelance", avatar: "PS", rating: 5, gradient: "from-violet-500 to-purple-600" },
+  { name: "Priya Sharma", role: "UX Designer · Freelance", avatar: "PS", rating: 5, gradient: "from-brand-500 to-brand-700" },
   { name: "Marcus Cole", role: "Software Engineer", avatar: "MC", rating: 5, gradient: "from-sky-500 to-blue-600" },
   { name: "Aisha Nomvete", role: "Content Creator", avatar: "AN", rating: 5, gradient: "from-pink-500 to-rose-600" },
 ];
@@ -35,7 +35,7 @@ export function Testimonials() {
           {testimonialMeta.map((meta, i) => (
             <div
               key={meta.name}
-              className="relative p-7 rounded-3xl bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow"
+              className="relative p-7 rounded-3xl bg-white dark:bg-[#1a1610] border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow"
             >
               <Quote className="w-8 h-8 text-brand-500/20 dark:text-brand-500/30 mb-4" />
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-sm">

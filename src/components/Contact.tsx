@@ -12,7 +12,7 @@ export function Contact() {
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gray-50/80 dark:bg-[#0d0920]/80" />
+      <div className="absolute inset-0 bg-gray-50/80 dark:bg-[#15120a]/80" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-brand-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto">
@@ -35,8 +35,8 @@ export function Contact() {
           <div className="lg:col-span-2 flex flex-col gap-6">
 
             {/* Email card */}
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 shadow-sm">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-brand-500/25">
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-[#1a1610] border border-gray-100 dark:border-white/5 shadow-sm">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white shrink-0 shadow-lg shadow-brand-500/25">
                 <Mail className="w-5 h-5" />
               </div>
               <div>
@@ -52,7 +52,7 @@ export function Contact() {
             </div>
 
             {/* DMs card */}
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 shadow-sm">
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-[#1a1610] border border-gray-100 dark:border-white/5 shadow-sm">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-pink-500/25">
                 <MessageCircle className="w-5 h-5" />
               </div>
@@ -77,7 +77,7 @@ export function Contact() {
 
           {/* Form — right */}
           <div className="lg:col-span-3">
-            <div className="p-8 rounded-3xl bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 shadow-sm">
+            <div className="p-8 rounded-3xl bg-white dark:bg-[#1a1610] border border-gray-100 dark:border-white/5 shadow-sm">
               {state.succeeded ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
@@ -145,7 +145,7 @@ export function Contact() {
                       "w-full flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-semibold text-white transition-all",
                       state.submitting
                         ? "bg-brand-400 cursor-not-allowed"
-                        : "bg-gradient-to-r from-brand-600 to-purple-600 hover:opacity-90 hover:scale-[1.02] shadow-lg shadow-brand-500/25"
+                        : "bg-gradient-to-r from-brand-600 to-brand-700 hover:opacity-90 hover:scale-[1.02] shadow-lg shadow-brand-500/25"
                     )}
                   >
                     {state.submitting ? (

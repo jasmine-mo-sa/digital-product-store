@@ -66,12 +66,12 @@ export function Navbar() {
           {/* Logo */}
           <a href="/" className="flex items-center group">
             <Image
-              src="/Studio Lumina - Logo.png"
+              src="/logo.jpeg"
               alt="StudioLumina"
-              width={44}
-              height={44}
+              width={120}
+              height={120}
               priority
-              className="h-11 w-11 rounded-full object-contain group-hover:scale-105 transition-transform duration-200"
+              className="h-[52px] w-[52px] rounded-full object-cover group-hover:scale-105 transition-transform duration-200"
             />
           </a>
 
@@ -104,7 +104,7 @@ export function Navbar() {
                 <ChevronDown className={cn("w-3 h-3 transition-transform", langOpen && "rotate-180")} />
               </button>
               {langOpen && (
-                <div className="absolute top-full mt-1.5 right-0 w-28 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                <div className="absolute top-full mt-1.5 right-0 w-28 bg-white dark:bg-[#1e1a12] border border-gray-100 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
                   {LANGS.map((l) => (
                     <button
                       key={l}
@@ -134,7 +134,7 @@ export function Navbar() {
                 <ChevronDown className={cn("w-3 h-3 transition-transform", currOpen && "rotate-180")} />
               </button>
               {currOpen && (
-                <div className="absolute top-full mt-1.5 right-0 w-24 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                <div className="absolute top-full mt-1.5 right-0 w-24 bg-white dark:bg-[#1e1a12] border border-gray-100 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
                   {CURRENCIES.map((c) => (
                     <button
                       key={c}
@@ -167,7 +167,7 @@ export function Navbar() {
             {/* Cart button */}
             <button
               onClick={() => setCartOpen(true)}
-              className="relative flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand-600 to-purple-600 text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all shadow-lg shadow-brand-500/25"
+              className="relative flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand-600 to-brand-700 text-white text-sm font-semibold hover:opacity-90 hover:scale-105 transition-all shadow-lg shadow-brand-500/25"
             >
               <ShoppingBag className="w-4 h-4" />
               <span className="hidden sm:inline">{t.nav.cart}</span>

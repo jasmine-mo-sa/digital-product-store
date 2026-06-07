@@ -12,7 +12,7 @@ export function About() {
       icon: <Palette className="w-5 h-5" />,
       title: t.about.value1Title,
       description: t.about.value1Desc,
-      gradient: "from-violet-500 to-purple-600",
+      gradient: "from-brand-500 to-brand-700",
     },
     {
       icon: <Zap className="w-5 h-5" />,
@@ -31,9 +31,9 @@ export function About() {
   return (
     <section id="about" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-white dark:bg-[#0b0516]" />
+      <div className="absolute inset-0 bg-white dark:bg-[#12100e]" />
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-500/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -56,13 +56,13 @@ export function About() {
                     />
                   </div>
                 </div>
-                <div className="absolute -top-2 -right-4 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
+                <div className="absolute -top-2 -right-4 bg-white dark:bg-[#1e1a12] border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-brand-500" />
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">{t.about.badge1}</span>
                   </div>
                 </div>
-                <div className="absolute -bottom-2 -left-4 bg-white dark:bg-[#1a0a2e] border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
+                <div className="absolute -bottom-2 -left-4 bg-white dark:bg-[#1e1a12] border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
                   <div className="flex items-center gap-2">
                     <Heart className="w-4 h-4 text-pink-500 fill-pink-500" />
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">{t.about.badge2}</span>

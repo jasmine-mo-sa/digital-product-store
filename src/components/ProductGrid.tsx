@@ -41,7 +41,7 @@ export function ProductGrid() {
     <>
       <section id="products" className="py-24 px-4 sm:px-6 lg:px-8 relative">
         {/* Background */}
-        <div className="absolute inset-0 bg-gray-50/80 dark:bg-[#0d0920]/80" />
+        <div className="absolute inset-0 bg-gray-50/80 dark:bg-[#15120a]/80" />
 
         <div className="relative max-w-7xl mx-auto">
           {/* Section header */}
@@ -66,7 +66,7 @@ export function ProductGrid() {
                 className={cn(
                   "px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-200",
                   activeCategory === cat
-                    ? "bg-gradient-to-r from-brand-600 to-purple-600 text-white shadow-lg shadow-brand-500/25 scale-105"
+                    ? "bg-gradient-to-r from-brand-600 to-brand-700 text-white shadow-lg shadow-brand-500/25 scale-105"
                     : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-white/10 hover:border-brand-400/40 hover:text-brand-600 dark:hover:text-brand-400"
                 )}
               >
@@ -135,7 +135,7 @@ function ProductCard({
   const features = pd?.features ?? product.features;
 
   return (
-    <article className="group relative flex flex-col rounded-3xl overflow-hidden bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 card-hover glow-hover shadow-sm">
+    <article className="group relative flex flex-col rounded-3xl overflow-hidden bg-white dark:bg-[#1a1610] border border-gray-100 dark:border-white/5 card-hover glow-hover shadow-sm">
       {/* Product visual */}
       {product.previewImage ? (
         <div className="relative aspect-[16/9] overflow-hidden bg-black">
@@ -256,7 +256,7 @@ function ProductCard({
                   ? "bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30 cursor-default"
                   : justAdded
                   ? "bg-green-500 text-white scale-95"
-                  : "bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
+                  : "bg-gradient-to-r from-brand-600 to-brand-700 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
               )}
             >
               {alreadyInCart ? (
