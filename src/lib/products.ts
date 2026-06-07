@@ -11,6 +11,7 @@ export type Product = {
   icon: string;
   sales: number;
   previewUrl?: string;
+  previewImage?: string;
 };
 
 export const products: Product[] = [

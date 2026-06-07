@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Sun, Moon, ShoppingBag, Menu, X, Sparkles, Globe, ChevronDown } from "lucide-react";
+import { Sun, Moon, ShoppingBag, Menu, X, Globe, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/lib/cartStore";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -63,13 +64,15 @@ export function Navbar() {
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-xl tracking-tight">
-              Studio<span className="text-gradient">Lumina</span>
-            </span>
+          <a href="/" className="flex items-center group">
+            <Image
+              src="/Studio Lumina - Logo.png"
+              alt="StudioLumina"
+              width={44}
+              height={44}
+              priority
+              className="h-11 w-11 rounded-full object-contain group-hover:scale-105 transition-transform duration-200"
+            />
           </a>
 
           {/* Desktop nav */}

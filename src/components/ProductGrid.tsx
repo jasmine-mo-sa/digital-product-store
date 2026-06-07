@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { ShoppingCart, Star, TrendingUp, CheckCircle2, ExternalLink } from "lucide-react";
+import Image from "next/image";
+import { ShoppingCart, Star, TrendingUp, CheckCircle2 } from "lucide-react";
 import { products, type Category } from "@/lib/products";
 import { useCart } from "@/lib/cartStore";
 import { ToastContainer, type ToastData } from "@/components/Toast";
@@ -136,32 +137,73 @@ function ProductCard({
   return (
     <article className="group relative flex flex-col rounded-3xl overflow-hidden bg-white dark:bg-[#13092b] border border-gray-100 dark:border-white/5 card-hover glow-hover shadow-sm">
       {/* Product visual */}
-      <div className={`relative bg-gradient-to-br ${product.gradient} aspect-[16/9] flex items-center justify-center overflow-hidden`}>
-        <span className="text-7xl drop-shadow-xl select-none">{product.icon}</span>
+      {product.previewImage ? (
+        <div className="relative aspect-[16/9] overflow-hidden bg-black">
+          <Image
+            src={product.previewImage}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-        <div className="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-white/10" />
-        <div className="absolute -top-4 -left-4 w-20 h-20 rounded-full bg-black/10" />
+          {/* Badges */}
+          <div className="absolute top-4 left-4 flex gap-2">
+            {badgeLabel && (
+              <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-white text-gray-900 text-xs font-bold shadow-sm">
+                {badgeLabel}
+              </span>
+            )}
+            {discount && (
+              <span className="px-3 py-1 rounded-full bg-red-500 text-white text-xs font-bold">
+                -{discount}%
+              </span>
+            )}
+          </div>
 
-        {/* Badges */}
-        <div className="absolute top-4 left-4 flex gap-2">
-          {badgeLabel && (
-            <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-white text-gray-900 text-xs font-bold shadow-sm">
-              {badgeLabel}
-            </span>
-          )}
-          {discount && (
-            <span className="px-3 py-1 rounded-full bg-red-500 text-white text-xs font-bold">
-              -{discount}%
-            </span>
-          )}
+          <span className="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-black/40 backdrop-blur-sm text-white text-xs font-medium">
+            {product.category === "Resume" ? t.products.catResume
+              : product.category === "Canva Kit" ? t.products.catCanva
+              : t.products.catPlanner}
+          </span>
         </div>
+      ) : (
+        <div className={`relative bg-gradient-to-br ${product.gradient} aspect-[16/9] flex items-center justify-center overflow-hidden`}>
+          {/* Decorative orbs */}
+          <div className="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-white/10" />
+          <div className="absolute -top-4 -left-4 w-20 h-20 rounded-full bg-black/10" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-white/5 blur-2xl pointer-events-none" />
 
-        <span className="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm text-white text-xs font-medium">
-          {product.category === "Resume" ? t.products.catResume
-            : product.category === "Canva Kit" ? t.products.catCanva
-            : t.products.catPlanner}
-        </span>
-      </div>
+          {/* Emoji + placeholder label */}
+          <div className="relative flex flex-col items-center gap-3">
+            <span className="text-7xl drop-shadow-xl select-none">{product.icon}</span>
+            <span className="text-[10px] font-semibold tracking-widest uppercase text-white/60 bg-black/25 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10">
+              Preview coming soon
+            </span>
+          </div>
+
+          {/* Badges */}
+          <div className="absolute top-4 left-4 flex gap-2">
+            {badgeLabel && (
+              <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-white text-gray-900 text-xs font-bold shadow-sm">
+                {badgeLabel}
+              </span>
+            )}
+            {discount && (
+              <span className="px-3 py-1 rounded-full bg-red-500 text-white text-xs font-bold">
+                -{discount}%
+              </span>
+            )}
+          </div>
+
+          <span className="absolute bottom-4 right-4 px-3 py-1 rounded-full bg-black/30 backdrop-blur-sm text-white text-xs font-medium">
+            {product.category === "Resume" ? t.products.catResume
+              : product.category === "Canva Kit" ? t.products.catCanva
+              : t.products.catPlanner}
+          </span>
+        </div>
+      )}
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-6">
@@ -205,17 +247,7 @@ function ProductCard({
             )}
           </div>
 
-          {product.previewUrl ? (
-            <a
-              href={product.previewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold text-sm transition-all duration-300 bg-gradient-to-r from-brand-600 to-purple-600 text-white hover:opacity-90 hover:scale-105 shadow-lg shadow-brand-500/25"
-            >
-              <ExternalLink className="w-4 h-4" /> {t.products.viewDownload}
-            </a>
-          ) : (
-            <button
+          <button
               onClick={handleBuy}
               disabled={alreadyInCart}
               className={cn(
@@ -235,7 +267,6 @@ function ProductCard({
                 <><ShoppingCart className="w-4 h-4" /> {t.products.addToCart}</>
               )}
             </button>
-          )}
         </div>
       </div>
     </article>

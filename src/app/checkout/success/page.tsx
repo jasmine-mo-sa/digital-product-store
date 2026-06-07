@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import { Sparkles, CheckCircle2, ArrowLeft, Eye, Mail, Lock } from "lucide-react";
 import Link from "next/link";
 import { PRODUCT_DOWNLOADS, type ProductDownload } from "@/lib/productDownloads";
+import { CartClearer } from "./CartClearer";
 
 // ── Stripe instance (server-side only) ──────────────────────────────────────
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -86,6 +87,8 @@ export default async function CheckoutSuccess({ searchParams }: Props) {
           <p className="text-gray-500 dark:text-gray-400 leading-relaxed mb-8">
             Thank you for your purchase! 🎉 Your products are unlocked below.
           </p>
+
+          {paymentVerified && <CartClearer />}
 
           {/* ── Product list with view links ─────────────────────────────── */}
           {paymentVerified && purchasedItems.length > 0 && (

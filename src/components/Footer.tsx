@@ -62,7 +62,7 @@ export function Footer() {
               {t.footer.supportLinks.map((item, i) => (
                 <li key={item}>
                   <a
-                    href={i === 2 ? "#contact" : "#"}
+                    href="#contact"
                     className="text-sm text-gray-500 dark:text-gray-400 hover:text-brand-500 transition-colors"
                   >
                     {item}

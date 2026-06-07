@@ -22,6 +22,7 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://digital-product-store-pi.vercel.app"),
   title: "Studio Lumina — Premium Digital Templates",
   description:
     "High-end Canva kits, resume templates, and digital planners crafted for creatives who want to stand out.",
@@ -30,6 +31,11 @@ export const metadata: Metadata = {
     title: "Studio Lumina — Premium Digital Templates",
     description: "Elevate your brand with premium digital design products.",
     type: "website",
+    images: [{ url: "/api/og", width: 1200, height: 630, alt: "StudioLumina" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/api/og"],
   },
 };
 
