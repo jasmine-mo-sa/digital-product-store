@@ -28,10 +28,10 @@ export function CartDrawer({ open, onClose }: Props) {
         body: JSON.stringify({ items, currency }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Checkout failed");
+      if (!res.ok) throw new Error(data.error ?? t.cart.checkoutFailed);
       window.location.href = data.url;
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError(err instanceof Error ? err.message : t.cart.errorFallback);
       setLoading(false);
     }
   };

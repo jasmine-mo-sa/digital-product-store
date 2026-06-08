@@ -3,10 +3,9 @@ import Stripe from "stripe";
 import { Resend } from "resend";
 import { PRODUCT_DOWNLOADS } from "@/lib/productDownloads";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: NextRequest) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const body = await req.text();
   const signature = req.headers.get("stripe-signature");
 
@@ -29,13 +28,13 @@ export async function POST(req: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    await handleCheckoutCompleted(session);
+    await handleCheckoutCompleted(session, stripe, resend);
   }
 
   return NextResponse.json({ received: true });
 }
 
-async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
+async function handleCheckoutCompleted(session: Stripe.Checkout.Session, stripe: Stripe, resend: Resend) {
   const customerEmail = session.customer_details?.email;
   if (!customerEmail) {
     console.error("[Stripe webhook] No customer email on session", session.id);

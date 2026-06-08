@@ -31,7 +31,7 @@ export function JsonLd() {
         url: "https://digital-product-store-pi.vercel.app",
         image: "https://digital-product-store-pi.vercel.app/api/og",
         priceRange: "$$",
-        currenciesAccepted: "USD,CAD,EUR",
+        currenciesAccepted: "CAD,EUR,SAR",
         paymentAccepted: "Credit Card",
         hasOfferCatalog: {
           "@type": "OfferCatalog",
