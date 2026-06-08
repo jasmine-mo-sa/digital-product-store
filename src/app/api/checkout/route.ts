@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 // Keep in sync with currencyStore.tsx
 const RATES: Record<string, number> = {
-  USD: 1,
   CAD: 1.36,
   EUR: 0.92,
+  SAR: 3.75,
 };
 
 type CartItem = {
@@ -18,8 +16,9 @@ type CartItem = {
 };
 
 export async function POST(req: NextRequest) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   try {
-    const { items, currency = "USD" } = (await req.json()) as {
+    const { items, currency = "CAD" } = (await req.json()) as {
       items: CartItem[];
       currency: string;
     };

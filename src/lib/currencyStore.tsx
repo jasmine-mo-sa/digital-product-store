@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
-export type Currency = "USD" | "CAD" | "EUR";
+export type Currency = "CAD" | "EUR" | "SAR";
 
 type CurrencyCtx = {
   currency: Currency;
@@ -12,21 +12,21 @@ type CurrencyCtx = {
 
 // Hardcoded rates relative to USD (update periodically)
 const RATES: Record<Currency, number> = {
-  USD: 1,
   CAD: 1.36,
   EUR: 0.92,
+  SAR: 3.75,
 };
 
 const SYMBOLS: Record<Currency, string> = {
-  USD: "$",
-  CAD: "C$",
+  CAD: "CA$",
   EUR: "€",
+  SAR: "﷼",
 };
 
 const CurrencyContext = createContext<CurrencyCtx | null>(null);
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
-  const [currency, setCurrencyState] = useState<Currency>("USD");
+  const [currency, setCurrencyState] = useState<Currency>("CAD");
 
   useEffect(() => {
     const saved = localStorage.getItem("lumina_currency") as Currency | null;

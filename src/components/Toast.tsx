@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { CheckCircle2, X } from "lucide-react";
+import { useLanguage } from "@/lib/languageStore";
+import { useCurrency } from "@/lib/currencyStore";
 
 export type ToastData = {
   id: number;
@@ -27,11 +29,11 @@ export function ToastContainer({ toasts, onRemove }: Props) {
 
 function ToastItem({ toast, onRemove }: { toast: ToastData; onRemove: (id: number) => void }) {
   const [visible, setVisible] = useState(false);
+  const { t } = useLanguage();
+  const { format } = useCurrency();
 
   useEffect(() => {
-    // Slide in
     const show = setTimeout(() => setVisible(true), 10);
-    // Slide out then remove
     const hide = setTimeout(() => setVisible(false), 2800);
     const remove = setTimeout(() => onRemove(toast.id), 3200);
     return () => { clearTimeout(show); clearTimeout(hide); clearTimeout(remove); };
@@ -47,9 +49,9 @@ function ToastItem({ toast, onRemove }: { toast: ToastData; onRemove: (id: numbe
         <CheckCircle2 className="w-5 h-5 text-green-500" />
       </div>
       <div>
-        <p className="font-semibold text-sm text-gray-900 dark:text-white">Added to cart!</p>
+        <p className="font-semibold text-sm text-gray-900 dark:text-white">{t.products.addedToCart}</p>
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          {toast.icon} {toast.title} · <span className="text-brand-500 font-medium">${toast.price}</span>
+          {toast.icon} {toast.title} · <span className="text-brand-500 font-medium">{format(toast.price)}</span>
         </p>
       </div>
       <button

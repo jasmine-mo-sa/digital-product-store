@@ -9,18 +9,22 @@ import { useLanguage } from "@/lib/languageStore";
 import { useCurrency, type Currency } from "@/lib/currencyStore";
 import { CartDrawer } from "@/components/CartDrawer";
 
-const LANGS = ["EN", "FR", "AR"] as const;
-const CURRENCIES: Currency[] = ["USD", "CAD", "EUR"];
+const LANGS = ["EN", "DE", "AR"] as const;
+
+const LANG_CURRENCY: Record<string, Currency> = {
+  en: "CAD",
+  de: "EUR",
+  ar: "SAR",
+};
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [currOpen, setCurrOpen] = useState(false);
   const { items } = useCart();
   const { lang, setLang, t } = useLanguage();
-  const { currency, setCurrency } = useCurrency();
+  const { setCurrency } = useCurrency();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -40,7 +44,9 @@ export function Navbar() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled ? "glass dark:glass-dark shadow-lg shadow-black/10 py-3" : "bg-transparent py-5"
+          scrolled
+            ? "bg-white/90 backdrop-blur-md shadow-md shadow-brand-200/40 border-b border-brand-100 py-3"
+            : "bg-[#fdf7ee]/80 backdrop-blur-sm py-5"
         )}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -55,7 +61,7 @@ export function Navbar() {
               priority
               className="h-[42px] w-[42px] rounded-full object-cover group-hover:scale-105 transition-transform duration-200"
             />
-            <span className="font-display font-bold text-xl tracking-tight text-white">
+            <span className="font-display font-bold text-xl tracking-tight text-brand-900">
               Studio<span className="text-gradient">Lumina</span>
             </span>
           </a>
@@ -66,7 +72,7 @@ export function Navbar() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-sm font-medium text-gray-300 hover:text-brand-400 transition-colors"
+                  className="text-sm font-medium text-brand-700 hover:text-brand-500 transition-colors"
                 >
                   {link.label}
                 </a>
@@ -80,55 +86,31 @@ export function Navbar() {
             {/* Language */}
             <div className="relative hidden sm:block">
               <button
-                onClick={() => { setLangOpen(!langOpen); setCurrOpen(false); }}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
+                onClick={() => setLangOpen(!langOpen)}
+                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium text-brand-700 hover:text-brand-900 hover:bg-brand-100 transition-colors"
               >
                 🌐 {lang.toUpperCase()}
                 <ChevronDown className={cn("w-3 h-3 transition-transform", langOpen && "rotate-180")} />
               </button>
               {langOpen && (
-                <div className="absolute top-full mt-1.5 right-0 w-24 bg-overlay border border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
+                <div className="absolute top-full mt-1.5 right-0 w-24 bg-white border border-brand-100 rounded-xl shadow-xl overflow-hidden z-50">
                   {LANGS.map((l) => (
                     <button
                       key={l}
-                      onClick={() => { setLang(l.toLowerCase() as Parameters<typeof setLang>[0]); setLangOpen(false); }}
+                      onClick={() => {
+                        const newLang = l.toLowerCase() as Parameters<typeof setLang>[0];
+                        setLang(newLang);
+                        setCurrency(LANG_CURRENCY[newLang]);
+                        setLangOpen(false);
+                      }}
                       className={cn(
                         "w-full px-4 py-2.5 text-sm text-left transition-colors",
                         lang.toUpperCase() === l
-                          ? "bg-brand-500/20 text-brand-400 font-semibold"
-                          : "text-gray-300 hover:bg-white/5"
+                          ? "bg-brand-100 text-brand-700 font-semibold"
+                          : "text-brand-800 hover:bg-brand-50"
                       )}
                     >
                       {l}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Currency */}
-            <div className="relative hidden sm:block">
-              <button
-                onClick={() => { setCurrOpen(!currOpen); setLangOpen(false); }}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                {currency}
-                <ChevronDown className={cn("w-3 h-3 transition-transform", currOpen && "rotate-180")} />
-              </button>
-              {currOpen && (
-                <div className="absolute top-full mt-1.5 right-0 w-24 bg-overlay border border-white/10 rounded-xl shadow-xl overflow-hidden z-50">
-                  {CURRENCIES.map((c) => (
-                    <button
-                      key={c}
-                      onClick={() => { setCurrency(c); setCurrOpen(false); }}
-                      className={cn(
-                        "w-full px-4 py-2.5 text-sm text-left transition-colors",
-                        currency === c
-                          ? "bg-brand-500/20 text-brand-400 font-semibold"
-                          : "text-gray-300 hover:bg-white/5"
-                      )}
-                    >
-                      {c}
                     </button>
                   ))}
                 </div>
@@ -151,7 +133,7 @@ export function Navbar() {
 
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden p-2 rounded-lg text-gray-300 hover:bg-white/10 transition-colors"
+              className="md:hidden p-2 rounded-lg text-brand-700 hover:bg-brand-100 transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
             >
               {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -161,36 +143,30 @@ export function Navbar() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden glass dark:glass-dark border-t border-white/10 px-4 py-4 space-y-3">
+          <div className="md:hidden bg-white/95 border-t border-brand-100 px-4 py-4 space-y-3">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="block text-sm font-medium text-gray-300 hover:text-brand-400 py-2"
+                className="block text-sm font-medium text-brand-800 hover:text-brand-600 py-2"
               >
                 {link.label}
               </a>
             ))}
-            <div className="flex gap-3 pt-2 border-t border-white/10">
+            <div className="flex gap-3 pt-2 border-t border-brand-100">
               {LANGS.map((l) => (
                 <button
                   key={l}
-                  onClick={() => setLang(l.toLowerCase() as Parameters<typeof setLang>[0])}
+                  onClick={() => {
+                    const newLang = l.toLowerCase() as Parameters<typeof setLang>[0];
+                    setLang(newLang);
+                    setCurrency(LANG_CURRENCY[newLang]);
+                  }}
                   className={cn("text-sm font-medium px-3 py-1 rounded-full transition-colors",
-                    lang.toUpperCase() === l ? "bg-brand-500/20 text-brand-400" : "text-gray-400"
+                    lang.toUpperCase() === l ? "bg-brand-100 text-brand-700" : "text-brand-600"
                   )}
                 >{l}</button>
-              ))}
-              <div className="w-px bg-white/10" />
-              {CURRENCIES.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => setCurrency(c)}
-                  className={cn("text-sm font-medium px-3 py-1 rounded-full transition-colors",
-                    currency === c ? "bg-brand-500/20 text-brand-400" : "text-gray-400"
-                  )}
-                >{c}</button>
               ))}
             </div>
           </div>

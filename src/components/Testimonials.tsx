@@ -1,74 +1,63 @@
-import { Star, Quote } from "lucide-react";
+"use client";
 
-const testimonials = [
-  {
-    name: "Priya Sharma",
-    role: "UX Designer · Freelance",
-    avatar: "PS",
-    rating: 5,
-    text: "The Lumina Brand Kit saved me so much time on a client pitch. Everything looks incredibly polished — my client thought I'd hired a whole design agency.",
-    gradient: "from-brand-500 to-brand-700",
-  },
-  {
-    name: "Marcus Cole",
-    role: "Software Engineer",
-    avatar: "MC",
-    rating: 5,
-    text: "Got three interview callbacks in one week after using the Executive Resume template. The ATS optimization is legit — definitely worth every penny.",
-    gradient: "from-sky-500 to-blue-600",
-  },
-  {
-    name: "Aisha Nomvete",
-    role: "Content Creator",
-    avatar: "AN",
-    rating: 5,
-    text: "I've been using the daily planner in GoodNotes for 3 months and I'm more organized than I've ever been. The design is so beautiful I actually want to use it.",
-    gradient: "from-pink-500 to-rose-600",
-  },
+import { Star, Quote } from "lucide-react";
+import { useLanguage } from "@/lib/languageStore";
+
+const REVIEWER_META = [
+  { name: "Priya Sharma", role: "UX Designer · Freelance", avatar: "PS", gradient: "from-brand-500 to-brand-700", rating: 5 },
+  { name: "Marcus Cole", role: "Software Engineer", avatar: "MC", gradient: "from-sky-500 to-blue-600", rating: 5 },
+  { name: "Aisha Nomvete", role: "Content Creator", avatar: "AN", gradient: "from-pink-500 to-rose-600", rating: 5 },
 ];
 
 export function Testimonials() {
+  const { t } = useLanguage();
+
+  const testimonials = REVIEWER_META.map((meta, i) => ({
+    ...meta,
+    text: t.testimonials.texts[i],
+  }));
+
   return (
-    <section id="reviews" className="py-24 px-4 sm:px-6 lg:px-8">
+    <section id="reviews" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#fdf7ee]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
-          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-brand-400 mb-3">
-            Reviews
+          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-600 mb-3">
+            {t.testimonials.sectionLabel}
           </span>
-          <h2 className="text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4">
-            Loved by Creatives
+          <h2 className="text-4xl sm:text-5xl font-black text-brand-900 mb-4">
+            {t.testimonials.heading}
           </h2>
           <div className="flex items-center justify-center gap-1 mb-2">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-6 h-6 fill-amber-400 text-amber-400" />
             ))}
-            <span className="ml-2 font-bold text-gray-700 dark:text-gray-200">4.9</span>
-            <span className="text-gray-400 dark:text-gray-500 ml-1">/ 5 · 340+ reviews</span>
+            <span className="ml-2 font-bold text-brand-800">4.9</span>
+            <span className="text-brand-600/60 ml-1">/ 5 · {t.testimonials.reviewCount}</span>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
+          {testimonials.map((item) => (
             <div
-              key={t.name}
-              className="relative p-7 rounded-3xl bg-white dark:bg-card border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow"
+              key={item.name}
+              className="relative p-7 rounded-3xl bg-white border border-brand-100 shadow-sm hover:shadow-xl hover:shadow-brand-200/50 transition-shadow"
             >
-              <Quote className="w-8 h-8 text-brand-500/20 dark:text-brand-500/30 mb-4" />
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-sm">
-                &ldquo;{t.text}&rdquo;
+              <Quote className="w-8 h-8 text-brand-400/30 mb-4" />
+              <p className="text-brand-800/75 leading-relaxed mb-6 text-sm">
+                &ldquo;{item.text}&rdquo;
               </p>
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-11 h-11 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm shrink-0`}
+                  className={`w-11 h-11 rounded-full bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white font-bold text-sm shrink-0`}
                 >
-                  {t.avatar}
+                  {item.avatar}
                 </div>
                 <div>
-                  <p className="font-semibold text-gray-900 dark:text-white text-sm">{t.name}</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">{t.role}</p>
+                  <p className="font-semibold text-brand-900 text-sm">{item.name}</p>
+                  <p className="text-xs text-brand-600/60">{item.role}</p>
                 </div>
                 <div className="ml-auto flex gap-0.5">
-                  {[...Array(t.rating)].map((_, i) => (
+                  {[...Array(item.rating)].map((_, i) => (
                     <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>

@@ -51,6 +51,7 @@ export const translations = {
       badgeNew: "New",
       badgePopular: "Popular",
       badgeSale: "Sale",
+      addedToCart: "Added to cart!",
     },
     productData: {
       1: {
@@ -142,6 +143,7 @@ export const translations = {
       sending: "Sending...",
       successHeading: "Message Sent!",
       successBody: "Thanks for reaching out! I'll get back to you within 24 hours.",
+      sendAnother: "Send another message",
     },
     footer: {
       tagline:
@@ -161,6 +163,7 @@ export const translations = {
       total: "Total",
       checkout: "Checkout",
       clear: "Clear cart",
+      processing: "Processing...",
     },
   },
 
@@ -206,6 +209,7 @@ export const translations = {
       badgeNew: "Neu",
       badgePopular: "Beliebt",
       badgeSale: "Angebot",
+      addedToCart: "In den Warenkorb gelegt!",
     },
     productData: {
       1: {
@@ -297,6 +301,7 @@ export const translations = {
       sending: "Wird gesendet...",
       successHeading: "Nachricht gesendet!",
       successBody: "Danke, dass Sie sich gemeldet haben! Ich melde mich innerhalb von 24 Stunden.",
+      sendAnother: "Weitere Nachricht senden",
     },
     footer: {
       tagline:
@@ -316,6 +321,7 @@ export const translations = {
       total: "Gesamt",
       checkout: "Zur Kasse",
       clear: "Warenkorb leeren",
+      processing: "Wird bearbeitet...",
     },
   },
 
@@ -361,6 +367,7 @@ export const translations = {
       badgeNew: "جديد",
       badgePopular: "رائج",
       badgeSale: "تخفيض",
+      addedToCart: "تمت الإضافة إلى السلة!",
     },
     productData: {
       1: {
@@ -449,6 +456,7 @@ export const translations = {
       sending: "جارٍ الإرسال...",
       successHeading: "تم إرسال رسالتك!",
       successBody: "شكراً لتواصلك! سأرد عليك خلال 24 ساعة.",
+      sendAnother: "إرسال رسالة أخرى",
     },
     footer: {
       tagline:
@@ -468,6 +476,7 @@ export const translations = {
       total: "الإجمالي",
       checkout: "إتمام الشراء",
       clear: "إفراغ السلة",
+      processing: "جارٍ المعالجة...",
     },
   },
 } as const;
