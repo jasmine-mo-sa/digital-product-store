@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 270 20% 8%;
+  }
+
+  .dark {
+    --background: 30 20% 6%;
+    --foreground: 0 0% 95%;
+    --color-surface:  #12100e;
+    --color-card:     #1a1610;
+    --color-overlay:  #1e1a12;
+    --color-deep:     #15120a;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white dark:bg-surface text-gray-900 dark:text-gray-100 antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  :lang(ar) body,
+  :root:lang(ar) {
+    font-family: var(--font-arabic), sans-serif;
+  }
+
+  ::selection {
+    @apply bg-brand-500/30;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-300 via-brand-400 to-brand-500;
+  }
+
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-md border border-white/10;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl;
+  }
+
+  .btn-brand {
+    @apply bg-gradient-to-r from-brand-600 to-brand-700 text-white hover:opacity-90 shadow-lg shadow-brand-500/25;
+  }
+
+  .glow {
+    box-shadow: 0 0 40px rgba(201, 169, 110, 0.18);
+  }
+
+  .glow-hover:hover {
+    box-shadow: 0 0 60px rgba(201, 169, 110, 0.32);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
