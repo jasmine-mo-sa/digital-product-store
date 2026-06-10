@@ -10,15 +10,26 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        sans:    ["var(--font-sans)", "Inter", "Cairo", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "Georgia", "serif"],
-        mono: ["var(--font-geist-mono)", "monospace"],
+        mono:    ["var(--font-geist-mono)", "monospace"],
+        arabic:  ["var(--font-arabic)", "Cairo", "sans-serif"],
       },
       colors: {
         surface:  "var(--color-surface)",
         card:     "var(--color-card)",
         overlay:  "var(--color-overlay)",
         deep:     "var(--color-deep)",
+        "lumina-gold": {
+          light:   "#F4EAD4",
+          DEFAULT: "#D4AF37",
+          dark:    "#AA820A",
+        },
+        "lumina-taupe": {
+          100: "#F5F5F4",
+          500: "#8B8580",
+          900: "#2A2725",
+        },
         brand: {
           50:  "#fdfaf5",
           100: "#f7f0e0",

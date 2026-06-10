@@ -10,16 +10,16 @@ const testimonialMeta = [
 ];
 
 export function Testimonials() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
 
   return (
     <section id="reviews" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
-          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-brand-400 mb-3">
+          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-lumina-gold mb-3">
             {t.testimonials.sectionLabel}
           </span>
-          <h2 className="font-display text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4">
+          <h2 className={`${isRtl ? "font-arabic" : "font-display"} text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4`}>
             {t.testimonials.heading}
           </h2>
           <div className="flex items-center justify-center gap-1 mb-2">
@@ -35,7 +35,7 @@ export function Testimonials() {
           {testimonialMeta.map((meta, i) => (
             <div
               key={meta.name}
-              className="relative p-7 rounded-3xl bg-white dark:bg-card border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow"
+              className="relative p-7 rounded-3xl bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-xl transition-shadow"
             >
               <Quote className="w-8 h-8 text-brand-500/20 dark:text-brand-500/30 mb-4" />
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-sm">

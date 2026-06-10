@@ -5,7 +5,7 @@ import { ArrowRight, Star, Download, Users } from "lucide-react";
 import { useLanguage } from "@/lib/languageStore";
 
 export function Hero() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -49,12 +49,12 @@ export function Hero() {
           </div>
 
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-600 dark:text-brand-400 text-sm font-medium mb-8 animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 dark:bg-lumina-gold/10 border border-brand-500/20 dark:border-lumina-gold/20 text-brand-600 dark:text-lumina-gold text-sm font-medium mb-8 animate-fade-in">
             <Star className="w-4 h-4 fill-brand-500 text-brand-500" />
             {t.hero.badge}
           </div>
 
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6 animate-slide-up">
+          <h1 className={`${isRtl ? "font-arabic" : "font-display"} text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight mb-6 animate-slide-up`}>
             {t.hero.title1}
             <br />
             <span className="text-gradient">{t.hero.title2}</span>
@@ -90,7 +90,7 @@ export function Hero() {
               { icon: <Star className="w-5 h-5 fill-amber-400 text-amber-400" />, value: t.hero.stat3Value, label: t.hero.stat3Label },
             ].map((stat) => (
               <div key={stat.label} className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-brand-500/10 text-brand-500 dark:text-brand-400">
+                <div className="p-2 rounded-xl bg-brand-500/10 dark:bg-lumina-gold/10 text-brand-500 dark:text-lumina-gold">
                   {stat.icon}
                 </div>
                 <div>
@@ -161,7 +161,7 @@ function FloatingCard({ className, delay, gradient, title, price, badge, icon }:
       <div className={`bg-gradient-to-br ${gradient} p-6 aspect-[3/2] flex items-center justify-center text-4xl`}>
         {icon}
       </div>
-      <div className="bg-white dark:bg-gray-900 p-4">
+      <div className="bg-white dark:bg-lumina-taupe-900 p-4">
         <div className="flex items-center justify-between mb-1">
           <p className="font-semibold text-sm text-gray-900 dark:text-white truncate">{title}</p>
           {badge && (

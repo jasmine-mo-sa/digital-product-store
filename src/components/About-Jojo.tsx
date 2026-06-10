@@ -5,7 +5,7 @@ import { Sparkles, Heart, Palette, Zap } from "lucide-react";
 import { useLanguage } from "@/lib/languageStore";
 
 export function About() {
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
 
   const values = [
     {
@@ -56,13 +56,13 @@ export function About() {
                     />
                   </div>
                 </div>
-                <div className="absolute -top-2 -right-4 bg-white dark:bg-overlay border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
+                <div className="absolute -top-2 -right-4 bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-brand-500" />
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">{t.about.badge1}</span>
                   </div>
                 </div>
-                <div className="absolute -bottom-2 -left-4 bg-white dark:bg-overlay border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
+                <div className="absolute -bottom-2 -left-4 bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/10 rounded-2xl px-4 py-2.5 shadow-xl">
                   <div className="flex items-center gap-2">
                     <Heart className="w-4 h-4 text-pink-500 fill-pink-500" />
                     <span className="text-sm font-semibold text-gray-900 dark:text-white">{t.about.badge2}</span>
@@ -74,10 +74,10 @@ export function About() {
 
           {/* Right — text */}
           <div>
-            <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-brand-400 mb-3">
+            <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-lumina-gold mb-3">
               {t.about.sectionLabel}
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
+            <h2 className={`${isRtl ? "font-arabic" : "font-display"} text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight`}>
               {t.about.heading1}{" "}
               <span className="text-gradient">{t.about.heading2}</span> {t.about.heading3}
             </h2>

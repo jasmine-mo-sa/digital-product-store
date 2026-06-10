@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans, Fira_Code, Noto_Sans_Arabic } from "next/font/google";
+import { Playfair_Display, Inter, Cairo, Fira_Code } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/lib/languageStore";
 import { CurrencyProvider } from "@/lib/currencyStore";
@@ -11,8 +11,8 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
@@ -21,9 +21,9 @@ const firaCode = Fira_Code({
   subsets: ["latin"],
 });
 
-const notoArabic = Noto_Sans_Arabic({
+const cairo = Cairo({
   variable: "--font-arabic",
-  subsets: ["arabic"],
+  subsets: ["arabic", "latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
@@ -52,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${playfair.variable} ${dmSans.variable} ${firaCode.variable} ${notoArabic.variable} font-sans`}>
+      <body className={`${playfair.variable} ${inter.variable} ${firaCode.variable} ${cairo.variable} font-sans`}>
         <LanguageProvider>
           <CurrencyProvider>
             <ThemeProvider>{children}</ThemeProvider>

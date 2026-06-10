@@ -39,7 +39,7 @@ function ToastItem({ toast, onRemove }: { toast: ToastData; onRemove: (id: numbe
 
   return (
     <div
-      className={`pointer-events-auto flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-overlay border border-gray-100 dark:border-white/10 shadow-2xl shadow-black/20 transition-all duration-300 ${
+      className={`pointer-events-auto flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/10 shadow-2xl shadow-black/20 transition-all duration-300 ${
         visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
       }`}
     >

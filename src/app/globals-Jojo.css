@@ -26,9 +26,19 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  :lang(ar) body,
-  :root:lang(ar) {
-    font-family: var(--font-arabic), sans-serif;
+  /* i18n font + direction triggers (html[lang] is set by LanguageProvider) */
+  html[lang="ar"] {
+    direction: rtl;
+  }
+
+  html[lang="ar"] body {
+    font-family: var(--font-arabic), Cairo, sans-serif;
+  }
+
+  html[lang="en"] body,
+  html[lang="de"] body {
+    font-family: var(--font-sans), Inter, system-ui, sans-serif;
+    direction: ltr;
   }
 
   ::selection {

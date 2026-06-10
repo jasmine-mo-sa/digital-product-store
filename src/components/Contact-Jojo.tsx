@@ -7,7 +7,7 @@ import { useLanguage } from "@/lib/languageStore";
 
 export function Contact() {
   const [state, handleSubmit] = useForm("xjgdyvvn");
-  const { t } = useLanguage();
+  const { t, isRtl } = useLanguage();
 
   return (
     <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
@@ -18,10 +18,10 @@ export function Contact() {
       <div className="relative max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">
-          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-brand-400 mb-3">
+          <span className="inline-block text-sm font-semibold tracking-widest uppercase text-brand-500 dark:text-lumina-gold mb-3">
             {t.contact.sectionLabel}
           </span>
-          <h2 className="font-display text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4">
+          <h2 className={`${isRtl ? "font-arabic" : "font-display"} text-4xl sm:text-5xl font-black text-gray-900 dark:text-white mb-4`}>
             {t.contact.heading}
           </h2>
           <p className="text-gray-500 dark:text-gray-400 text-lg max-w-xl mx-auto">
@@ -35,7 +35,7 @@ export function Contact() {
           <div className="lg:col-span-2 flex flex-col gap-6">
 
             {/* Email card */}
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-card border border-gray-100 dark:border-white/5 shadow-sm">
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/5 shadow-sm">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white shrink-0 shadow-lg shadow-brand-500/25">
                 <Mail className="w-5 h-5" />
               </div>
@@ -52,7 +52,7 @@ export function Contact() {
             </div>
 
             {/* DMs card */}
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-card border border-gray-100 dark:border-white/5 shadow-sm">
+            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/5 shadow-sm">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-pink-500/25">
                 <MessageCircle className="w-5 h-5" />
               </div>
@@ -77,7 +77,7 @@ export function Contact() {
 
           {/* Form — right */}
           <div className="lg:col-span-3">
-            <div className="p-8 rounded-3xl bg-white dark:bg-card border border-gray-100 dark:border-white/5 shadow-sm">
+            <div className="p-8 rounded-3xl bg-white dark:bg-lumina-taupe-900 border border-gray-100 dark:border-white/5 shadow-sm">
               {state.succeeded ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
